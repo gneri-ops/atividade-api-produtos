@@ -1,26 +1,61 @@
 async function carregarDados() {
+
     const url = 'https://verbose-zebra-xrv7pg7w7qxx3vj4w-3000.app.github.dev/';
 
-    const resposta = await fetch(url);
+    try {
 
-    const produto = await resposta.json();
+        const resposta = await fetch(url);
 
-    const listaProdutos = document.getElementById('lista-produtos');
+        const produtos = await resposta.json();
 
-    listaProdutos.innerHTML = `
-        <div class="card">
-            <h2>${produto.nome}</h2>
+        const listaProdutos = document.getElementById('lista-produtos');
 
-            <p>
-                <strong>Categoria:</strong>
-                ${produto.categoria}
+        listaProdutos.innerHTML = produtos.map((produto, index) => `
+            
+            <div class="card" style="animation-delay: ${index * 0.2}s">
+
+                <div class="imagem-container">
+
+                    <img
+                        src="${produto.imagem}"
+                        alt="${produto.nome}"
+                        class="imagem-produto"
+                    >
+
+                </div>
+
+                <div class="informacoes">
+
+                    <h2>${produto.nome}</h2>
+
+                    <p class="categoria">
+                        ${produto.categoria}
+                    </p>
+
+                    <p class="preco">
+                        R$ ${produto.preco.toFixed(2).replace('.', ',')}
+                    </p>
+
+                    <button>
+                        Ver produto
+                    </button>
+
+                </div>
+
+            </div>
+
+        `).join('');
+
+    } catch (erro) {
+
+        console.error('Erro ao carregar os produtos:', erro);
+
+        document.getElementById('lista-produtos').innerHTML = `
+            <p class="erro">
+                Não foi possível carregar os produtos.
             </p>
-
-            <p class="preco">
-                R$ ${produto.preco.toFixed(2).replace('.', ',')}
-            </p>
-        </div>
-    `;
+        `;
+    }
 }
 
 carregarDados();

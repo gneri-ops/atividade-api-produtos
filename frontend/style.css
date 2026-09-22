@@ -2,51 +2,246 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #f2f4f8;
-    padding: 20px;
+
+    background:
+        radial-gradient(circle at top left, #4f46e5, transparent 35%),
+        radial-gradient(circle at bottom right, #06b6d4, transparent 35%),
+        #111827;
+
+    color: white;
+
+    padding: 50px 25px;
+
+    overflow-x: hidden;
 }
 
-main {
-    width: 100%;
-    max-width: 500px;
+header {
     text-align: center;
+    margin-bottom: 50px;
+    animation: aparecerTitulo 1s ease;
 }
 
-h1 {
-    margin-bottom: 25px;
-    color: #222;
+header h1 {
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 18px;
+    opacity: 0.8;
+}
+
+#lista-produtos {
+    max-width: 1100px;
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 30px;
 }
 
 .card {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+
+    color: #222;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.35);
+
+    opacity: 0;
+
+    transform:
+        translateY(60px)
+        scale(0.9);
+
+    animation:
+        aparecerCard 0.8s ease forwards;
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.card:hover {
+    transform:
+        translateY(-15px)
+        scale(1.03);
+
+    box-shadow:
+        0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.imagem-container {
+    width: 100%;
+    height: 220px;
+
+    overflow: hidden;
+
+    background: #e5e7eb;
+}
+
+.imagem-produto {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.6s ease;
+}
+
+.card:hover .imagem-produto {
+    transform:
+        scale(1.15)
+        rotate(2deg);
+}
+
+.informacoes {
     padding: 25px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
-    text-align: left;
 }
 
-.card h2 {
-    margin-bottom: 15px;
-    color: #333;
+.informacoes h2 {
+    font-size: 24px;
+
+    margin-bottom: 10px;
+
+    color: #1e293b;
 }
 
-.card p {
-    margin: 10px 0;
-    color: #555;
+.categoria {
+    display: inline-block;
+
+    background: #e0e7ff;
+
+    color: #4338ca;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 14px;
+
+    margin-bottom: 18px;
 }
 
 .preco {
-    margin-top: 18px;
-    font-size: 24px;
+    font-size: 28px;
+
     font-weight: bold;
-    color: #1769e0;
+
+    color: #16a34a;
+
+    margin-bottom: 20px;
+
+    transition:
+        transform 0.3s ease;
+}
+
+.card:hover .preco {
+    transform:
+        scale(1.08);
+}
+
+button {
+    width: 100%;
+
+    border: none;
+
+    padding: 13px;
+
+    border-radius: 10px;
+
+    background: #4f46e5;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+
+button:hover {
+    background: #3730a3;
+
+    transform:
+        translateY(-3px);
+}
+
+button:active {
+    transform:
+        scale(0.95);
+}
+
+.erro {
+    text-align: center;
+
+    font-size: 20px;
+
+    color: #ff6b6b;
+}
+
+@keyframes aparecerTitulo {
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(-40px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+@keyframes aparecerCard {
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(60px)
+            scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 30px 15px;
+    }
+
+    header h1 {
+        font-size: 32px;
+    }
+
+    #lista-produtos {
+        grid-template-columns: 1fr;
+    }
 }
